@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Github</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <section class="hero" id="hero">
+    <button id="btnStart">Start</button>
+  </section>
+
+  <section class="app hidden" id="app">
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="canvas"></canvas>
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+    </div>
+    <button class="btn-back" id="btnBack">&#8592;</button>
+  </section>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
