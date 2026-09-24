@@ -21,23 +21,38 @@ html, body {
 }
 
 .hero h1 {
-  font-size: clamp(3.5rem, 12vw, 7rem);
+  font-size: 4rem;
   font-weight: 800;
   letter-spacing: -3px;
+  text-shadow: 0 4px 20px rgba(124, 109, 250, 0.5);
 }
 
 #btnStart {
-  padding: .65rem 2.2rem;
-  background: #7c6dfa;
+  padding: 0.75rem 2.5rem;
+  background: linear-gradient(135deg, #7c6dfa 0%, #9b8aff 100%);
   color: #fff;
-  font-size: .95rem;
+  font-size: 1rem;
   font-weight: 600;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: opacity .2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(124, 109, 250, 0.4);
 }
-#btnStart:hover { opacity: .75; }
+#btnStart:hover { 
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(124, 109, 250, 0.6);
+}
+#btnStart:active {
+  transform: translateY(0);
+}
+
+.hero-hint {
+  font-size: .75rem;
+  color: rgba(255,255,255,0.4);
+  max-width: 400px;
+  text-align: center;
+}
 
 /* ── App ── */
 .app {
@@ -78,6 +93,13 @@ html, body {
 }
 .loading-overlay.done { opacity: 0; pointer-events: none; }
 
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
 .spinner {
   width: 32px;
   height: 32px;
@@ -88,24 +110,247 @@ html, body {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ── Back ── */
-.btn-back {
+.loading-text {
+  font-size: .9rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+.loading-progress {
+  width: 200px;
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #7c6dfa;
+  width: 0%;
+  transition: width .3s ease;
+}
+
+/* ── Controls ── */
+.controls {
   position: absolute;
   top: 1rem;
   left: 1rem;
+  right: 1rem;
   z-index: 5;
-  background: rgba(0,0,0,.4);
-  border: 1px solid #2a2a2a;
-  color: #555;
-  width: 36px;
-  height: 36px;
-  border-radius: 6px;
-  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: .5rem;
+}
+
+.controls-right {
+  display: flex;
+  gap: .5rem;
+}
+
+.btn-back, .btn-switch, .btn-help {
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.2);
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color .2s, border-color .2s;
-  backdrop-filter: blur(4px);
+  transition: background .2s, transform .15s;
+  backdrop-filter: blur(12px);
+  font-size: 1.2rem;
 }
-.btn-back:hover { color: #e0e0e0; border-color: #444; }
+
+.btn-back:hover, .btn-switch:hover, .btn-help:hover {
+  background: rgba(255,255,255,.25);
+  transform: scale(1.05);
+}
+
+.btn-back:active, .btn-switch:active, .btn-help:active {
+  transform: scale(0.95);
+}
+
+.btn-switch svg, .btn-help svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (min-width: 768px) {
+  .btn-switch { display: none; }
+  .controls-right { margin-left: auto; }
+}
+
+/* ── Help overlay ── */
+.help-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(20px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.help-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.help-content {
+  background: rgba(20, 20, 30, 0.95);
+  border: 1px solid rgba(124, 109, 250, 0.3);
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+/* Custom scrollbar */
+.help-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.help-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.help-content::-webkit-scrollbar-thumb {
+  background: rgba(124, 109, 250, 0.5);
+  border-radius: 4px;
+}
+
+.help-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 109, 250, 0.7);
+}
+
+.help-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.help-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #7c6dfa;
+  margin: 0;
+}
+
+.help-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.help-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.help-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.gesture-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.gesture-item:hover {
+  background: rgba(124, 109, 250, 0.1);
+  border-color: rgba(124, 109, 250, 0.3);
+  transform: translateX(4px);
+}
+
+.gesture-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(124, 109, 250, 0.15);
+  border-radius: 10px;
+}
+
+.gesture-info {
+  flex: 1;
+}
+
+.gesture-info h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 0.4rem 0;
+}
+
+.gesture-info p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .help-content {
+    max-height: 90vh;
+  }
+  
+  .help-header {
+    padding: 1rem;
+  }
+  
+  .help-header h2 {
+    font-size: 1.25rem;
+  }
+  
+  .gesture-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 2rem;
+  }
+  
+  .gesture-info h3 {
+    font-size: 0.9rem;
+  }
+  
+  .gesture-info p {
+    font-size: 0.8rem;
+  }
+}
+
+/* ── Help hint button ── */
+/* Removed - replaced with btn-help in controls */
