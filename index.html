@@ -3,22 +3,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Github</title>
+  <title>Hand Track</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <section class="hero" id="hero">
-    <button id="btnStart">Start</button>
+    <h1>Hand <span class="accent">Track</span></h1>
+    <button id="btnStart">Click here</button>
   </section>
 
   <section class="app hidden" id="app">
     <video id="video" autoplay playsinline muted></video>
     <canvas id="canvas"></canvas>
-    <div class="loading-overlay" id="loadingOverlay">
-      <div class="spinner"></div>
+    
+    <!-- Help overlay -->
+    <div class="help-overlay hidden" id="helpOverlay">
+      <div class="help-content">
+        <div class="help-header">
+          <h2>Fitur</h2>
+          <button class="help-close" id="helpClose">&times;</button>
+        </div>
+        <div class="help-body">
+          <div class="gesture-item">
+            <div class="gesture-icon">1</div>
+            <div class="gesture-info">
+              <h3>Jempol + Telunjuk (Kedua Tangan)</h3>
+              <p>Toggle Persegi 1</p>
+            </div>
+          </div>
+          <div class="gesture-item">
+            <div class="gesture-icon">2</div>
+            <div class="gesture-info">
+              <h3>Jempol + Tengah (Kedua Tangan)</h3>
+              <p>Toggle Persegi 2</p>
+            </div>
+          </div>
+          <div class="gesture-item">
+            <div class="gesture-icon">3</div>
+            <div class="gesture-info">
+              <h3>Jempol + Kelingking (Satu Tangan)</h3>
+              <p>Ganti efek persegi yang aktif. Tahan 3 detik untuk auto-cycle terus menerus.</p>
+            </div>
+          </div>
+          <div class="gesture-item">
+            <div class="gesture-icon">4</div>
+            <div class="gesture-info">
+              <h3>Metal Sign (Satu Tangan)</h3>
+              <p>Toggle blur wajah</p>
+            </div>
+          </div>
+          <div class="gesture-item">
+            <div class="gesture-icon">5</div>
+            <div class="gesture-info">
+              <h3>Kedua Tangan bersentuhan</h3>
+              <p>Toggle prisma 5 sisi</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <button class="btn-back" id="btnBack">&#8592;</button>
+    
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-content">
+        <div class="spinner"></div>
+        <div class="loading-text" id="loadingText">Memuat kamera...</div>
+        <div class="loading-progress">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="btn-back" id="btnBack">&#8592;</button>
+      <button class="btn-switch" id="btnSwitch">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/>
+        </svg>
+      </button>
+      <div class="controls-right">
+        <button class="btn-help" id="btnHelp" title="Bantuan">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   </section>
 
   <script type="module" src="app.js"></script>
